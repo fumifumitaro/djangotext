@@ -8,6 +8,6 @@ from .forms import SignupForm
 class SignupView(CreateView):
     model = User
     from_class = SignupForm
-    fields = ['username','password']
+    fields = ['username', 'password']
     template_name = 'accounts/signup.html'
     success_url = reverse_lazy('index')

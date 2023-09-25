@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
-
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (
-    ListView, DetailView, CreateView, DeleteView, UpdateView,
-    )
+    ListView,
+    DetailView,
+    CreateView,
+    DeleteView,
+    UpdateView,
+)
 
-from .models import Book
-
-
-from .models import Book,Review
+from .models import Book, Review
 
 
 class ListBookView(ListView):
@@ -26,23 +25,23 @@ class DetailBookView(DetailView):
 class CreateBookView(CreateView):
     template_name = 'book/book_create.html'
     model = Book
-    fields = ('title', 'text', 'category')
-    success_url = reverse('list-book')
+    fields = ('title', 'text', 'category', 'thumbnail')
+    success_url = reverse_lazy('list-book')
 
 class DeleteBookView(DeleteView):
     template_name = 'book/book_confirm_delete.html'
     model = Book
-    success_url = reverse('list-book')
+    success_url = reverse_lazy('list-book')
 
 class UpdateBookView(UpdateView):
     model = Book
-    fields = ('title', 'text', 'category')
+    fields = ('title', 'text', 'category', 'thumbnail')
     template_name = 'book/book_update.html'
-    success_url = reverse('list-book')
+    success_url = reverse_lazy('list-book')
 
 def index_view(request):
-    object_list = Book.objects.all()
-    return render(request, 'book/index.html',{'object_list': object_list})
+    object_list = Book.objects.order_by('category')
+    return render(request, 'book/index.html', {'object_list': object_list})
 
 class CreateReviewView(CreateView):
     model = Review

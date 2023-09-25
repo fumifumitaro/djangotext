@@ -1,4 +1,3 @@
-# from typing import List, Any
 from django.urls import path
 
 from . import views
